@@ -1,0 +1,26 @@
+.logo,
+.leave-complaint {
+  z-index: 100 !important;
+  background-color: white !important;
+  position: absolute !important;
+  top: 30px !important;
+  left: 20px;
+  height: 40px;
+  width: 100px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 2px solid rgb(195, 193, 193);
+
+  &:hover {
+    opacity: 0.9;
+    border: 2px solid black;
+    cursor: pointer;
+  }
+}
+.leave-complaint {
+  left: 20px;
+  top: 100px !important;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+}

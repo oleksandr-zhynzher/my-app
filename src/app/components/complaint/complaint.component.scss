@@ -1,0 +1,8 @@
+.complaint {
+    border-bottom: 1px solid grey;
+
+    &__title {
+        font-weight: bold;
+        font-size: 16px;
+    }
+}

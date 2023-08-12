@@ -1,0 +1,219 @@
+$primary-color: #007bff;
+$secondary-color: #e6e6e6;
+$highlight-color: #0056b3;
+$font-family: "Roboto", sans-serif;
+$base-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+
+.complaint-form {
+  font-family: $font-family;
+  background-color: #f7f9fc;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: $base-shadow;
+  max-width: 600px;
+  margin: 40px auto;
+
+  &__title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+  }
+
+  &__description {
+    color: #555;
+    margin-bottom: 30px;
+    text-align: center;
+  }
+
+  &__sub-title {
+    font-size: 16px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-weight: normal;
+  }
+
+  button {
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 16px;
+
+    &.active {
+      box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  &__privacy,
+  &__person-status,
+  &__signs-of-ignoring {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    button {
+      background-color: $secondary-color;
+      color: #333;
+      min-width: 150px;
+      max-width: 150px;
+      &.active {
+        background-color: $primary-color;
+        color: white;
+      }
+
+      &:hover {
+        background-color: $highlight-color;
+      }
+    }
+
+    &-title {
+      font-size: 18px;
+      margin-bottom: 15px;
+      min-width: 250px;
+      max-width: 250px;
+      margin-right: 20px;
+    }
+  }
+
+  &__signs-of-ignoring {
+    display: block;
+    &-description {
+      width: 100%;
+      font-weight: normal;
+      font-size: 16px;
+    }
+
+    button {
+      margin-right: 20px;
+    }
+  }
+
+  &__input {
+    margin-bottom: 20px;
+    position: relative;
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: #444;
+    }
+
+    input,
+    select,
+    textarea {
+      font-family: $font-family;
+      font-size: 16px;
+      width: 100%;
+      padding: 10px;
+      border: 1px solid $secondary-color;
+      border-radius: 5px;
+      transition: border 0.3s;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease; // Smooth transition for all properties
+
+      &:focus {
+        border-color: $primary-color;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1),
+          0 1px 2px rgba(92, 107, 192, 0.2);
+        outline: none;
+      }
+    }
+
+    textarea {
+      height: 120px;
+      margin-top: 10px;
+    }
+
+    select {
+      font-size: 16px;
+      padding: 10px 15px;
+
+      option {
+        padding: 5px 10px;
+        color: #333;
+      }
+    }
+
+    &--checkbox {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+
+      input {
+        box-shadow: none;
+        width: 20px;
+        height: 20px;
+      }
+      label {
+        margin-top: 5px;
+        margin-left: 5px;
+      }
+    }
+
+    &--select {
+      display: flex;
+      align-items: center;
+
+      label {
+        display: inline;
+        margin-right: 10px;
+        max-width: 330px;
+      }
+
+      select {
+        width: 210px;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none; // to handle Firefox
+        padding-right: 40px; // to prevent text from overlapping the arrow and provide enough space for margin
+        /* ... other styles ... */
+
+        &::-ms-expand {
+          // For IE/Edge to hide their dropdown arrow
+          display: none;
+        }
+      }
+      .select-wrapper {
+        position: relative;
+        display: inline-block;
+
+        &:after {
+          content: "▼"; // or another Unicode arrow of your choice
+          position: absolute;
+          top: 50%;
+          right: 10px; // adjust the margin
+          transform: translateY(-50%);
+          font-size: 12px; // adjust the size
+          color: #495057; // color of the arrow
+          pointer-events: none;
+        }
+      }
+
+      &-large {
+        select {
+          margin-left: -15px;
+          width: 240px;
+        }
+      }
+    }
+  }
+
+  &__submit {
+    display: block;
+    height: 48px;
+    margin: 10px auto;
+    padding: 10px 20px;
+    background-color: $primary-color;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+      background-color: $highlight-color;
+    }
+  }
+}

@@ -1,0 +1,333 @@
+<section class="complaint-form">
+  <h1 class="complaint-form__title">Залиште повідомлення про корупцію</h1>
+  <p class="complaint-form__description">
+    Залиште звернення про вчинення корупційного злочину заповнивши форму, ці
+    данні дуже важливі для систематизації та розповсюдження інформації щодо
+    корупційних схем в державі
+  </p>
+  <div class="complaint-form__privacy">
+    <h2 class="complaint-form__privacy-title">Я бажаю залишити скаргу:</h2>
+    <button
+      class="complaint-form__privacy-button complaint-form__privacy-button--anonimus"
+      [ngClass]="{ active: isAnonimus }"
+      (click)="setPrivacyPreferences(true)"
+    >
+      Анонімно
+    </button>
+    <button
+      class="complaint-form__privacy-button complaint-form__privacy-button--personal"
+      [ngClass]="{ active: !isAnonimus }"
+      (click)="setPrivacyPreferences(false)"
+    >
+      Публічно
+    </button>
+  </div>
+
+  <div *ngIf="!isAnonimus" class="complaint-form__person-status">
+    <h2 class="complaint-form__person-status-title">Звернення від:</h2>
+    <button
+      class="complaint-form___person-status-button complaint-form___person-status-button--phisical"
+      [ngClass]="{ active: personStatus === 'phisical' }"
+      (click)="setPersonStatus('phisical')"
+    >
+      Фізичної Особи
+    </button>
+    <button
+      class="complaint-form__person-status-button complaint-form___person-status-button--legal"
+      [ngClass]="{ active: personStatus === 'legal' }"
+      (click)="setPersonStatus('legal')"
+    >
+      Юридичної Особи
+    </button>
+  </div>
+  <form
+    class="complaint-form__form"
+    [formGroup]="generalInfoForm"
+    (ngSubmit)="onGeneralInfoFormSubmit()"
+  >
+    <ng-container *ngIf="!isAnonimus">
+      <ng-container *ngIf="personStatus === 'phisical'">
+        <div class="complaint-form__input">
+          <label for="phisicalPersonFirstName">Ім'я:</label>
+          <input
+            id="phisicalPersonFirstName"
+            type="text"
+            formControlName="phisicalPersonFirstName"
+          />
+        </div>
+        <div class="complaint-form__input">
+          <label for="phisicalPersonLastName">Призвище:</label>
+          <input
+            id="phisicalPersonLastName"
+            type="text"
+            formControlName="phisicalPersonLastName"
+          />
+        </div>
+        <div class="complaint-form__input">
+          <label for="phisicalPersonEmail">Контактний Email Адрес:</label>
+          <input
+            id="phisicalPersonEmail"
+            type="email"
+            formControlName="phisicalPersonEmail"
+          />
+        </div>
+        <div class="complaint-form__input">
+          <label for="phisicalPersonPhoneNumber">Телефонний Номер:</label>
+          <input
+            id="phisicalPersonPhoneNumber"
+            type="tel"
+            formControlName="phisicalPersonPhoneNumber"
+          />
+        </div>
+      </ng-container>
+      <ng-container *ngIf="personStatus === 'legal'">
+        <div class="complaint-form__input">
+          <label for="legalPersonName">Найменування Юридичної Особи:</label>
+          <input
+            id="legalPersonName"
+            type="text"
+            formControlName="legalPersonName"
+            required
+          />
+        </div>
+        <div class="complaint-form__input">
+          <label for="legalPersonFirstName"
+            >Ім'я представника юридичної особи:</label
+          >
+          <input
+            id="legalPersonFirstName"
+            type="text"
+            formControlName="legalPersonFirstName"
+          />
+        </div>
+        <div class="complaint-form__input">
+          <label for="legalPersonLastName"
+            >Призвище представника юридичної особи:</label
+          >
+          <input
+            id="legalPersonLastName"
+            type="text"
+            formControlName="legalPersonLastName"
+          />
+        </div>
+        <div class="complaint-form__input">
+          <label for="legalPersonAddress">Адреса юридичної особи:</label>
+          <input
+            id="legalPersonAddress"
+            type="text"
+            formControlName="legalPersonAddress"
+          />
+        </div>
+        <div class="complaint-form__input">
+          <label for="legalPersonEmail">Контактний Email Адресс:</label>
+          <input
+            id="legalPersonEmail"
+            type="email"
+            formControlName="legalPersonEmail"
+          />
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <div class="complaint-form__input">
+      <h4 class="complaint-form__sub-title">Місце вчинення злочину:</h4>
+      <app-city-finder
+        (citySelected)="onCitySelected($event)"
+      ></app-city-finder>
+    </div>
+
+    <div class="complaint-form__input">
+      <label for="description"
+        >Короткий виклад обставин, що можуть свідчити про вчинення
+        правопорушення:</label
+      >
+      <textarea
+        id="description"
+        type="textarea"
+        formControlName="description"
+        required
+      ></textarea>
+    </div>
+
+    <div class="complaint-form__input complaint-form__input--select">
+      <label for="typeOfCrime">Вид злочину:</label>
+      <div class="select-wrapper">
+        <select id="typeOfCrime" formControlName="typeOfCrime">
+          <option
+            *ngFor="let option of typeOfCrimeOptions"
+            [value]="option.value"
+          >
+            {{ option.display }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="complaint-form__input complaint-form__input--select">
+      <label for="typeOfDamage">Чи були завдані збитки:</label>
+      <div class="select-wrapper">
+        <select id="typeOfDamage" formControlName="typeOfDamage">
+          <option
+            *ngFor="let option of damageTypeOptions"
+            [value]="option.value"
+          >
+            {{ option.display }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="complaint-form__input complaint-form__input--select">
+      <label for="govermentObject">Суб’єкт/Орган державної влади:</label>
+      <div class="select-wrapper">
+        <select id="govermentObject" formControlName="govermentObject">
+          <option
+            *ngFor="let option of govermentObjectOptions"
+            [value]="option.value"
+          >
+            {{ option.display }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="complaint-form__input complaint-form__input--select">
+      <label for="scaleOfCrime">Територіальний масштаб правопорушення:</label>
+      <div class="select-wrapper">
+        <select id="scaleOfCrime" formControlName="scaleOfCrime">
+          <option
+            *ngFor="let option of scaleOfCrimeOptions"
+            [value]="option.value"
+          >
+            {{ option.display }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <h4 class="complaint-form__sub-title">
+      Ймовірна сфера відповідальності за правопорушенням:
+    </h4>
+
+    <div class="complaint-form__input complaint-form__input--checkbox">
+      <input
+        id="disciplinaryLiability"
+        type="checkbox"
+        formControlName="disciplinaryLiability"
+      />
+      <label for="disciplinaryLiability">Дисциплінарна</label>
+    </div>
+
+    <div class="complaint-form__input complaint-form__input--checkbox">
+      <input
+        id="administrativeLiability"
+        type="checkbox"
+        formControlName="administrativeLiability"
+      />
+      <label for="administrativeLiability">Адміністративна</label>
+    </div>
+    <div class="complaint-form__input complaint-form__input--checkbox">
+      <input
+        id="criminalLiability"
+        type="checkbox"
+        formControlName="criminalLiability"
+      />
+      <label for="criminalLiability">Кримінальна</label>
+    </div>
+    <div class="complaint-form__input complaint-form__input--checkbox">
+      <input
+        id="civilLiability"
+        type="checkbox"
+        formControlName="civilLiability"
+      />
+      <label for="civilLiability">Цивільно-Правова</label>
+    </div>
+    <div class="complaint-form__input complaint-form__input--checkbox">
+      <input
+        id="politicalLiability"
+        type="checkbox"
+        formControlName="politicalLiability"
+      />
+      <label for="politicalLiability">Політична</label>
+    </div>
+    <div class="complaint-form__input complaint-form__input--checkbox">
+      <input
+        id="ethicalLiability"
+        type="checkbox"
+        formControlName="ethicalLiability"
+      />
+      <label for="ethicalLiability">Морально-Етична</label>
+    </div>
+
+    <div
+      class="complaint-form__input complaint-form__input--select complaint-form__input--select-large"
+    >
+      <label for="verifiedByState">
+        Чи були вжиті заходи державою щодо перевірки достовірності повідомлення:
+      </label>
+      <div class="select-wrapper">
+        <select id="verifiedByState" formControlName="verifiedByState">
+          <option
+            *ngFor="let option of verifiedByStateOptions"
+            [value]="option.value"
+          >
+            {{ option.display }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="complaint-form__signs-of-ignoring">
+      <h2 class="complaint-form__signs-of-ignoring-description">
+        Чи є ознаки ігнорування перевірки достовірності повідомлення:
+      </h2>
+      <button
+        type="button"
+        [ngClass]="{ active: isSignsOfIgnoringPresent }"
+        (click)="setSignsOfIgnoring(true)"
+      >
+        Так
+      </button>
+      <button
+        type="button"
+        [ngClass]="{ active: !isSignsOfIgnoringPresent }"
+        (click)="setSignsOfIgnoring(false)"
+      >
+        Ні
+      </button>
+    </div>
+
+    <div *ngIf="isSignsOfIgnoringPresent" class="complaint-form__input">
+      <label for="descriptionOfHowIgnoredCoruptionSignals">
+        Будь-ласка опишіть як саме було виражено ігнорування повідомлення:
+      </label>
+      <textarea
+        id="descriptionOfHowIgnoredCoruptionSignals"
+        type="textarea"
+        formControlName="descriptionOfHowIgnoredCoruptionSignals"
+        required
+      ></textarea>
+    </div>
+    <div
+      class="complaint-form__input complaint-form__input--select"
+    >
+      <label for="levelOfVerification"
+        >Ступінь перевірки правопорушення:
+      </label>
+      <div class="select-wrapper">
+        <select id="levelOfVerification" formControlName="levelOfVerification">
+          <option
+            *ngFor="let option of levelOfVerificationOptions"
+            [value]="option.value"
+          >
+            {{ option.display }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <button class="complaint-form__submit" type="submit">
+      Залишити Скаргу
+    </button>
+  </form>
+</section>
